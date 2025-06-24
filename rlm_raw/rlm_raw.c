@@ -77,7 +77,7 @@ static ssize_t raw_xlat(void *instance, REQUEST *request, char const *attr,
   if (!dup_packet)
     return 0;
 
-  decode_result = rad_decode(dup_packet, NULL, "");
+  decode_result = rad_decode(dup_packet, NULL, request->client->secret);
   if (decode_result == 0 && dup_packet->vps) {
     vp = fr_pair_find_by_da(dup_packet->vps, da, TAG_ANY);
     if (vp) {
@@ -87,8 +87,8 @@ static ssize_t raw_xlat(void *instance, REQUEST *request, char const *attr,
       RDEBUG2("rlm_raw: Not found, %s", attr);
     }
   } else {
-    RDEBUG2("rlm_raw: Could not decode packet or no VPS data ~");
-    RDEBUG2("rlm_raw: Error %s", decode_result);
+    RDEBUG2("rlm_raw: Could not decode packet or no VPS data");
+    RDEBUG2("rlm_raw: Error %d, secret %s", decode_result, request->client->secret);
   }
 
   copy_packet_free(&dup_packet);
