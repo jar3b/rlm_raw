@@ -87,7 +87,7 @@ static ssize_t raw_xlat(void *instance, REQUEST *request, char const *attr,
       RDEBUG2("rlm_raw: Not found, %s", attr);
     }
   } else {
-    RDEBUG2("rlm_raw: Could not decode packet or no VPS data");
+    RDEBUG2("rlm_raw: Could not decode packet or no VPS data ~");
     RDEBUG2("rlm_raw: Error %s", decode_result);
   }
 
